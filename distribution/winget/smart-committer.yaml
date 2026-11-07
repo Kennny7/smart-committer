@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.singleton.1.6.0.schema.json
+PackageIdentifier: Kennny7.smart-committer
+PackageVersion: 0.2.0
+PackageLocale: en-US
+Publisher: Kennny7
+PublisherUrl: https://github.com/Kennny7
+PublisherSupportUrl: https://github.com/Kennny7/smart-committer/issues
+PackageName: smart-committer
+PackageUrl: https://github.com/Kennny7/smart-committer
+License: MIT
+LicenseUrl: https://github.com/Kennny7/smart-committer/blob/main/LICENSE
+ShortDescription: Local LLM-powered Git commit automation microservice and CLI via Ollama.
+Description: |
+  Smart Committer automates git commits using local Ollama LLMs.
+  Supports granular single-file commits, atomic batch commits, and directory-grouped commits,
+  with built-in credential detection and REST microservice daemon.
+Moniker: smart-committer
+Tags:
+  - git
+  - commit
+  - ollama
+  - llm
+  - automation
+  - microservice
+ReleaseDate: 2026-11-07
+Installers:
+  - Architecture: x64
+    InstallerType: portable
+    InstallerUrl: https://github.com/Kennny7/smart-committer/releases/download/v0.2.0/smart-committer-windows-amd64.exe
+    InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000 # Update with sha256 after release
+    Commands:
+      - smart-committer
+ManifestType: singleton
+ManifestVersion: 1.6.0
