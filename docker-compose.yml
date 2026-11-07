@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  smart-committer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smart-committer-service
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODEL=qwen2.5:7b
+      - SMART_COMMITTER_MODE=single
+      - SMART_COMMITTER_STYLE=conventional
+      - SMART_COMMITTER_CONCURRENCY=4
+      - SMART_COMMITTER_SECRET_SCAN=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ~/.smart-committer/logs:/home/appuser/.smart-committer/logs
+      # Map host workspace into container if committing directly
+      - ./:/workspace
+    working_dir: /workspace
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: smart-committer-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:11434/api/tags || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+volumes:
+  ollama_models:
+    name: smart_committer_ollama_models
